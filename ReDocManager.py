@@ -1,14 +1,15 @@
-#import FileManager
+import FileManager
 import os
 import json
 import re
 from typing import Union, Dict, List
 from pathlib import Path
 
+
 class ReDocManager:
     
     def __init__(self):
-        main_folder = "C:\\ReDocManager"
+        main_folder = r"C:\ReDocManager"
         title_structure_doc = ""
 
     def doc_name_generator(self,base_name):
@@ -54,12 +55,13 @@ class ReDocManager:
             return True, "文件夹创建成功", os.path.abspath(parent_folder), os.path.abspath(child_path)
         
         except FileExistsError:
-            return False, f"子文件夹 {child_folder} 已存在", None, None
+            print("子文件夹 {child_folder} 已存在")
         except Exception as e:
-            return False, f"创建文件夹时出错: {str(e)}", None, None
-               
-
-    def load_title_structure_doc(self,file_path: Union[str, Path]) -> Union[Dict, List]:
+            print("创建文件夹时出错: {str(e)}")
+            
+    # 函数接口理解错误 函数功能应该是 生成的渲染头文件的模板 作为函数返回值 用于生成头文件
+    def load_title_structure_doc(self):
+        #不存在模板文件，无法进行测试
         """
         加载结果数据头文件模板
         在文件夹中找re_title文件->JSON并加载返回
@@ -72,45 +74,51 @@ class ReDocManager:
         :return: 解析后的 Python 对象
         :raises: ValueError 如果文件不存在或 JSON 格式无效
         """
-        path = Path(file_path)
+        path = Path(r"re_sub_title\re_sub_title.json")
         if not path.exists():
             raise ValueError(f"文件不存在: {file_path}")
             
         try:
             with open(path, 'r', encoding='utf-8') as f:
                 self.title_structure_doc = json.load(f)
+                return self.title_structure_doc
+            
         except json.JSONDecodeError as e:
             raise ValueError(f"无效的 JSON 格式: {e}")
 
+# 由于头文件无法生成 之后内容无法进行测试
     def load_json_doc(self):
         """
         读取结果数据头文件的结果文件数量，并加载结果文件模板 -> json
         
         """
-        re_num = title_structure_doc["re_num"]
-        param_set = title_structure_doc["param_set"]
-
-        pre_file_name = string.format("re_sub_title/{param_set}_re_doc/re_doc{re_num}/re_decision_pre")
-        aft_file_name = string.format("re_sub_title/{param_set}_re_doc/re_doc{re_num}/re_dicision_aft")
-        suggest_file_name= string.format("re_sub_title/{param_set}_re_doc/re_doc{re_num}/re_analyse")
-        
-        with open("pre_file_name", 'r', encoding='utf-8') as re_decision_pre:
-            re_decision_pre = json.load(pre_file)
+        re_num = self.title_structure_doc["re_num"]
+        param_set = self.title_structure_doc["param_set"]
+# foramt方法使用错误
+        pre_file_name = "re_sub_title/{}_re_doc/re_doc{}/re_decision_pre".format(param_set,re_num)
+        aft_file_name = "re_sub_title/{}_re_doc/re_doc{}/re_dicision_aft".format(param_set,re_num)
+        suggest_file_name= "re_sub_title/{}_re_doc/re_doc{}/re_analyse".format(param_set,re_num)
+# 结果参数已经格式化过了,为什么还要调用模板？ 如果是要打开三个文件，是否应该返回文件对象？而且使用with文件对象自动销毁
+        with open(pre_file_name, 'r', encoding='utf-8') as re_decision_pre:
+            re_decision_pre_data = json.load(pre_file) 
+        #打开未知文件 且文件名对应变量重新赋值 目的不明 以下两次赋值同理
             
-        with open("aft_file_name", 'r', encoding='utf-8') as re_dicision_aft:
-            re_dicision_aft = json.load(aft_file)
+        with open(aft_file_name, 'r', encoding='utf-8') as re_dicision_aft:
+            re_dicision_aft_data = json.load(aft_file)
             
-        with open("suggest_file_name", 'r', encoding='utf-8') as re_analyse:
-            re_analyse = json.load(suggest_file)
+        with open(suggest_file_name, 'r', encoding='utf-8') as re_analyse:
+            re_analyse_data = json.load(suggest_file)
 
-        return re_decision_pre,re_dicision_aft,re_analyse
+        return re_decision_pre_data,re_dicision_aft_data,re_analyse_data
 
-    def doc_json_generator(self):
+    def doc_json_generator(self, data):
+        # 1， 此处需要传入的是数据 而此处代码中使用的文件 不符要求
+        # 2.  由于1的原因 无法测试暂不确定是否通关
         """
         存储传输过来的三个JSON文件 按要求的命名格式       
         """
-        file = open("file_name", 'r', encoding='utf-8')
-        data = json.load(file)
+        #file = open("file_name", 'r', encoding='utf-8')
+        #data = json.load(file)
 
         road_data = data['道路数据']
 
@@ -165,16 +173,19 @@ class ReDocManager:
         删除指定的结果文件夹
         传输过来的文件夹名字，直接删除
         """
-        fm = FileManager()
-        fm.delete_file(file_name)
+        fm = FileManager.FileManager() #模块调用错误 模块在调用时 import的模块名如果要调用内部的内容 需要先用import的模块名.要调用的内容 比如此处应该写 FileManager.FileManager
+        if fm.delete_file(file_name):
+            print("delete successfully")
+        else:
+            print("delete failure")
 
-
-    def doc_index(filename):
+    def doc_index(file_name):
+        #1.变量名不统一 2.在类中的静态方法 需要增加静态方法的装饰器
         """
         查找到对应的结果文件夹
         查找传过来的文件夹名字
         """
-        fm = FileManager()
+        fm = FileManager.FileManager()
         fm.search_files(file_name)
 
     def file_del(self,result_file_name):
@@ -182,7 +193,7 @@ class ReDocManager:
         删除指定的结果文件
         删除传过来的结果文件名字
         """
-        fm = FileManager()
+        fm = FileManager.FileManager()#模块调用错误 模块在调用时 import的模块名如果要调用内部的内容 需要先用import的模块名.要调用的内容 比如此处应该写 FileManager.FileManager
         fm.delete_file(result_file_name)
 
     def file_index(self,result_file_name):
@@ -190,31 +201,40 @@ class ReDocManager:
         查找指定的结果文件
         查找传过来的结果文件名字
         """
-        fm = FileManager()
+        fm = FileManager.FileManager()#模块调用错误 模块在调用时 import的模块名如果要调用内部的内容 需要先用import的模块名.要调用的内容 比如此处应该写 FileManager.FileManager
         fm.search_files(result_file_name)
 
 
     def add_tag(self, tag):
+        #tag变量未使用  意义不明
         """
         增加标签
         :param tag: 指定标签
         """
-        with open('re_title', 'r') as f:
+        file_name = r're_sub_title\re_sub_title.json'
+        with open(file_name, 'r') as f:
             tags = json.load(f)
-        tags["new_tag"] = "new_value"
+        tags["tag_" + tag] = "re_sub_title"
+        #打开文本后 未修改源文件
+        update_file(file_name,tags)
 
     def del_tag(self, tag):
+         #tag变量未使用  意义不明
+  
         """
         删除标签
 
         :param tag: 指定标签
         """
-        with open("re_title", "r") as f:
+        file_name = r're_sub_title\re_sub_title.json'
+        with open(file_name, "r") as f:
             tags = json.load(f)
-            if "tag" in tags:
-                del data["tag"]
+            if "tag_" + tag in tags:
+                del data["tag_" + tag]
+        #打开文本后 未修改源文件
+        update_file(file_name,tags)
 
-
+    #无法测试暂不确定是否通关
     def add_file(self,data,tag, file_name):
         """
         在指定标签中增加文件名
@@ -244,7 +264,7 @@ class ReDocManager:
     
         return data
 
-    
+    #无法测试暂不确定是否通关
     def rm_file(self,data,tag, file_name):
         """
         在指定标签中删除文件名
@@ -278,3 +298,15 @@ class ReDocManager:
         with open(file_name, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
         print(f"数据已写入 {file_name}")
+#update file这一函数为什么不直接嵌入前面的函数内部 直接实现文件内的修改？
+
+
+if __name__ == "__main__" :
+    huxiong = ReDocManager()
+    # result1 = huxiong.doc_name_generator("Hi")
+    # print(result1)
+    # doc_name_generator 测试无问题
+    # 缺少删除文件夹的方法
+    # update file在文件生成中调用 不要让其独立调用 需要做一个组合 组成一个完整的函数(传高阶函数进update_file)
+
+    huxiong.doc_del("pao_re_doc")
