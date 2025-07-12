@@ -1,0 +1,6 @@
+/* 对齐输入框 */
+.content>.core-area>.right-info>.right-add-file>.core-info>.wrapper>.add-dir>div:nth-child(2){
+    margin-left: -47px;
+}
+
+
