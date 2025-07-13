@@ -2,9 +2,9 @@ import FileManager
 import os
 import json
 import re
+import stat
 from typing import Union, Dict, List
 from pathlib import Path
-import stat
 
 class ReDocManager:
     
