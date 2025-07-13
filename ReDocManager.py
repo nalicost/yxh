@@ -4,13 +4,16 @@ import json
 import re
 from typing import Union, Dict, List
 from pathlib import Path
-
+import stat
 
 class ReDocManager:
     
     def __init__(self):
         main_folder = r"C:\ReDocManager"
         title_structure_doc = ""
+        pre_file_name = ""
+        aft_file_name = ""
+        suggest_file_name= ""
 
     def doc_name_generator(self,base_name):
         """
@@ -59,9 +62,8 @@ class ReDocManager:
         except Exception as e:
             print("创建文件夹时出错: {str(e)}")
             
-    # 函数接口理解错误 函数功能应该是 生成的渲染头文件的模板 作为函数返回值 用于生成头文件
+    # 函数功能无法实现建议：写相对路径而非绝对路径
     def load_title_structure_doc(self):
-        #不存在模板文件，无法进行测试
         """
         加载结果数据头文件模板
         在文件夹中找re_title文件->JSON并加载返回
@@ -74,9 +76,9 @@ class ReDocManager:
         :return: 解析后的 Python 对象
         :raises: ValueError 如果文件不存在或 JSON 格式无效
         """
-        path = Path(r"re_sub_title\re_sub_title.json")
+        path = Path(r"\re_sub_title\re_sub_title.json") 
         if not path.exists():
-            raise ValueError(f"文件不存在: {file_path}")
+            raise ValueError(f"文件不存在: ")
             
         try:
             with open(path, 'r', encoding='utf-8') as f:
@@ -86,86 +88,74 @@ class ReDocManager:
         except json.JSONDecodeError as e:
             raise ValueError(f"无效的 JSON 格式: {e}")
 
-# 由于头文件无法生成 之后内容无法进行测试
-    def load_json_doc(self):
+    def load_json_doc(self, data):
         """
         读取结果数据头文件的结果文件数量，并加载结果文件模板 -> json
         
         """
-        re_num = self.title_structure_doc["re_num"]
-        param_set = self.title_structure_doc["param_set"]
-# foramt方法使用错误
-        pre_file_name = "re_sub_title/{}_re_doc/re_doc{}/re_decision_pre".format(param_set,re_num)
-        aft_file_name = "re_sub_title/{}_re_doc/re_doc{}/re_dicision_aft".format(param_set,re_num)
-        suggest_file_name= "re_sub_title/{}_re_doc/re_doc{}/re_analyse".format(param_set,re_num)
-# 结果参数已经格式化过了,为什么还要调用模板？ 如果是要打开三个文件，是否应该返回文件对象？而且使用with文件对象自动销毁
-        with open(pre_file_name, 'r', encoding='utf-8') as re_decision_pre:
-            re_decision_pre_data = json.load(pre_file) 
-        #打开未知文件 且文件名对应变量重新赋值 目的不明 以下两次赋值同理
-            
-        with open(aft_file_name, 'r', encoding='utf-8') as re_dicision_aft:
-            re_dicision_aft_data = json.load(aft_file)
-            
-        with open(suggest_file_name, 'r', encoding='utf-8') as re_analyse:
-            re_analyse_data = json.load(suggest_file)
+        #if re_num == "":
+        #    load_title_structure_doc(self)
+        #    re_num = self.title_structure_doc.get("re_num")
+        #    param_set = self.title_structure_doc.get("param_set")
 
-        return re_decision_pre_data,re_dicision_aft_data,re_analyse_data
+        #file = open("file_name", 'r', encoding='utf-8')
+        #data = json.load(file)
+
+        road_data = data.get('道路数据')
+
+        traffic_data_pre = {
+            "道路数据":{}
+            }
+
+        traffic_data_aft = {
+            "道路数据":{}
+            }
+
+        traffic_data_analyse = {
+            "道路数据":{}
+            }
+
+        '''遍历键值对'''
+        for key, value in road_data.items():
+            road_data[key].pop("决策后")
+            traffic_data_pre["道路数据"][key] = road_data.get(key)
+        
+        for key, value in road_data.items():
+            '''print("{key}: {value}")'''
+            '''print(road_data[key]["决策后"])'''
+            road_data[key].pop("决策前", None)
+            '''del road_data[key]["决策建议"]'''
+            traffic_data_aft["道路数据"][key] = road_data.get(key)
+
+        traffic_data_analyse["道路数据"]["决策建议"] = road_data.get("决策建议")
 
     def doc_json_generator(self, data):
-        # 1， 此处需要传入的是数据 而此处代码中使用的文件 不符要求
-        # 2.  由于1的原因 无法测试暂不确定是否通关
         """
         存储传输过来的三个JSON文件 按要求的命名格式       
         """
         #file = open("file_name", 'r', encoding='utf-8')
         #data = json.load(file)
-
-        road_data = data['道路数据']
-
-        traffic_data = {
-            "道路数据":{}
-            }
-
-        '''遍历键值对'''
-        for key, value in road_data.items():
-            del road_data[key]["决策后"]
-            traffic_data["道路数据"][key] = road_data[key]
-
+        """
+        决策前
+        """
         with open('re_decision_pre.json', 'w', encoding='utf-8') as f:
-            json.dump(traffic_data, f, ensure_ascii=False, indent=4)
+            json.dump(traffic_data_pre, f, ensure_ascii=False, indent=4)
 
         """
         决策后
         """
 
-        road_data = data['道路数据']
-
-        traffic_data = {
-            "道路数据":{}
-            }
-
-        '''遍历键值对'''
-        for key, value in road_data.items():
-            '''print("{key}: {value}")'''
-            '''print(road_data[key]["决策后"])'''
-            del road_data[key]["决策前"]
-            '''del road_data[key]["决策建议"]'''
-    
-            traffic_data["道路数据"][key] = road_data[key]
-
         with open('re_dicision_aft', 'w', encoding='utf-8') as f:
-            json.dump(traffic_data, f, ensure_ascii=False, indent=4)
+            json.dump(traffic_data_aft, f, ensure_ascii=False, indent=4)
             
         """
         决策建议
         """
-        road_data = data['决策建议']
-
-
         with open('re_analyse', 'w', encoding='utf-8') as f:
-            json.dump(road_data, f, ensure_ascii=False, indent=4)
+            json.dump(road_data_analyse, f, ensure_ascii=False, indent=4)
 
-        file.close()
+        #file.close()
+        # 此处代码错误
 
 
     def doc_del(self,file_name):
@@ -173,27 +163,26 @@ class ReDocManager:
         删除指定的结果文件夹
         传输过来的文件夹名字，直接删除
         """
-        fm = FileManager.FileManager() #模块调用错误 模块在调用时 import的模块名如果要调用内部的内容 需要先用import的模块名.要调用的内容 比如此处应该写 FileManager.FileManager
+        fm = FileManager.FileManager()
         if fm.delete_file(file_name):
             print("delete successfully")
         else:
             print("delete failure")
 
-    def doc_index(file_name):
-        #1.变量名不统一 2.在类中的静态方法 需要增加静态方法的装饰器
+    def doc_index(self,file_name):
         """
         查找到对应的结果文件夹
         查找传过来的文件夹名字
         """
         fm = FileManager.FileManager()
-        fm.search_files(file_name)
+        return fm.search_files(file_name)
 
     def file_del(self,result_file_name):
         """
         删除指定的结果文件
         删除传过来的结果文件名字
         """
-        fm = FileManager.FileManager()#模块调用错误 模块在调用时 import的模块名如果要调用内部的内容 需要先用import的模块名.要调用的内容 比如此处应该写 FileManager.FileManager
+        fm = FileManager.FileManager()
         fm.delete_file(result_file_name)
 
     def file_index(self,result_file_name):
@@ -201,12 +190,11 @@ class ReDocManager:
         查找指定的结果文件
         查找传过来的结果文件名字
         """
-        fm = FileManager.FileManager()#模块调用错误 模块在调用时 import的模块名如果要调用内部的内容 需要先用import的模块名.要调用的内容 比如此处应该写 FileManager.FileManager
+        fm = FileManager.FileManager()
         fm.search_files(result_file_name)
 
 
     def add_tag(self, tag):
-        #tag变量未使用  意义不明
         """
         增加标签
         :param tag: 指定标签
@@ -215,11 +203,9 @@ class ReDocManager:
         with open(file_name, 'r') as f:
             tags = json.load(f)
         tags["tag_" + tag] = "re_sub_title"
-        #打开文本后 未修改源文件
-        update_file(file_name,tags)
+        ReDocManager.update_file(file_name,tags)
 
     def del_tag(self, tag):
-         #tag变量未使用  意义不明
   
         """
         删除标签
@@ -228,13 +214,12 @@ class ReDocManager:
         """
         file_name = r're_sub_title\re_sub_title.json'
         with open(file_name, "r") as f:
-            tags = json.load(f)
+            data = json.load(f)
             if "tag_" + tag in tags:
-                del data["tag_" + tag]
-        #打开文本后 未修改源文件
-        update_file(file_name,tags)
+                data.pop("tag_" + tag)
+                # 没有data这一全局变量，无法实现
+        ReDocManager.update_file(file_name,data)
 
-    #无法测试暂不确定是否通关
     def add_file(self,data,tag, file_name):
         """
         在指定标签中增加文件名
@@ -264,7 +249,6 @@ class ReDocManager:
     
         return data
 
-    #无法测试暂不确定是否通关
     def rm_file(self,data,tag, file_name):
         """
         在指定标签中删除文件名
@@ -298,15 +282,30 @@ class ReDocManager:
         with open(file_name, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
         print(f"数据已写入 {file_name}")
-#update file这一函数为什么不直接嵌入前面的函数内部 直接实现文件内的修改？
 
 
 if __name__ == "__main__" :
-    huxiong = ReDocManager()
-    # result1 = huxiong.doc_name_generator("Hi")
+    # os.chmod(r"C:\Users\吉毅诚\Desktop\ReDocManager2\ReDocManager\ReDocManager\re_sub_title\re_sub_title.json",stat.S_IRWXU)
+    #huxiong = ReDocManager()
+    # result1 = huxiong.doc_name_generator("test1")
     # print(result1)
+    # doc_name_generator 测试无问题 可生成文件 可重复生成
+    # result3 =huxiong.load_title_structure_doc()
+    # print(result3)
+    # load_title_structure_doc 函数测试未通过 无法实现功能 建议：写相对路径而非绝对路径
+    # huxiong.doc_json_generator({'道路数据': {'广富林路': {'决策后': [{'时段': '12:00-12:30', '平均速度': 22.8, '拥堵频率': 52.1, '排队通过率': 115.4, '拥堵指数': 0.7, '变化': '平均速度↑25.3% 拥堵频率↓20.3% 排队长度↓19.2%'}, {'时段': '12:30-13:00', '平均速度': 26.1, '拥堵频率': 45.7, '排队通过率': 98.3, '拥堵指数': 0.63, '变化': '平均速度↑21.4% 拥堵频率↓21.6% 排队长度↓21.7%'}, {'时段': '13:00-13:30', '平均速度': 29.4, '拥堵频率': 38.6, '排队通过率': 84.2, '拥堵指数': 0.55, '变化': '平均速度↑19.0% 拥堵频率↓21.4% 排队长度↓22.3%'}, {'时段': '13:30-14:00', '平均速度': 33.7, '拥堵频率': 31.5, '排队通过率': 70.8, '拥堵指数': 0.47, '变化': '平均速度↑19.1% 拥堵频率↓21.6% 排队长度↓23.5%'}]}, '文汇路': {'决策后': [{'时段': '12:00-12:30', '平均速度': 18.9, '拥堵频率': 62.4, '排队通过率': 138.7, '拥堵指数': 0.8, '变化': '平均速度↓7.8% 拥堵频率↑6.3% 排队长度↑8.0%'}, {'时段': '12:30-13:00', '平均速度': 21.3, '拥堵频率': 55.8, '排队通过率': 121.6, '拥堵指数': 0.73, '变化': '平均速度↓7.8% 拥堵频率↑9.0% 排队长度↑8.3%'}, {'时段': '13:00-13:30', '平均速度': 23.7, '拥堵频率': 49.1, '排队通过率': 106.2, '拥堵指数': 0.66, '变化': '平均速度↓8.1% 拥堵频率↑10.1% 排队长度↑8.9%'}, {'时段': '13:30-14:00', '平均速度': 27.1, '拥堵频率': 41.5, '排队通过率': 91.4, '拥堵指数': 0.59, '变化': '平均速度↓7.2% 拥堵频率↑9.8% 排队长度↑9.2%'}]}, '人民北路': {'决策后': [{'时段': '12:00-12:30', '平均速度': 20.6, '拥堵频率': 58.2, '排队通过率': 127.3, '拥堵指数': 0.77, '变化': '平均速度↓7.6% 拥堵频率↑6.6% 排队长度↑7.2%'}, {'时段': '12:30-13:00', '平均速度': 23.1, '拥堵频率': 51.4, '排队通过率': 111.6, '拥堵指数': 0.7, '变化': '平均速度↓6.9% 拥堵频率↑8.7% 排队长度↑7.9%'}, {'时段': '13:00-13:30', '平均速度': 25.4, '拥堵频率': 44.8, '排队通过率': 97.2, '拥堵指数': 0.63, '变化': '平均速度↓7.6% 拥堵频率↑8.7% 排队长度↑8.2%'}, {'时段': '13:30-14:00', '平均速度': 28.7, '拥堵频率': 38.1, '排队通过率': 83.4, '拥堵指数': 0.56, '变化': '平均速度↓7.1% 拥堵频率↑9.8% 排队长度↑9.0%'}]}, '银泽路': {'决策后': [{'时段': '12:00-12:30', '平均速度': 14.3, '拥堵频率': 75.6, '排队通过率': 168.4, '拥堵指数': 0.92, '变化': '平均速度↓9.5% 拥堵频率↑6.0% 排队长度↑6.4%'}, {'时段': '12:30-13:00', '平均速度': 16.7, '拥堵频率': 67.8, '排队通过率': 147.3, '拥堵指数': 0.84, '变化': '平均速度↓9.2% 拥堵频率↑6.8% 排队长度↑6.2%'}, {'时段': '13:00-13:30', '平均速度': 19.3, '拥堵频率': 59.2, '排队通过率': 128.1, '拥堵指数': 0.76, '变化': '平均速度↓9.0% 拥堵频率↑7.4% 排队长度↑6.4%'}, {'时段': '13:30-14:00', '平均速度': 22.4, '拥堵频率': 51.3, '排队通过率': 110.5, '拥堵指数': 0.68, '变化': '平均速度↓8.9% 拥堵频率↑7.3% 排队长度↑6.4%'}]}}})
+    # doc_json_generator 测试有问题 具体见上
+    # huxiong.doc_del("test1")
+    # doc_del 测试通过
+    # huxiong.file_del()
+    # huxiong.file_index()
+    # result2 = huxiong.doc_name_generator("Hi")
+    # print(result2)
     # doc_name_generator 测试无问题
     # 缺少删除文件夹的方法
     # update file在文件生成中调用 不要让其独立调用 需要做一个组合 组成一个完整的函数(传高阶函数进update_file)
-
-    huxiong.doc_del("pao_re_doc")
+    # huxiong.doc_del("pao_re_doc")
+    # doc_del 测试无误
+    # huxiong.doc_index()
+    # huxiong.add_tag("决策建议")
+    # huxiong.update_file()
