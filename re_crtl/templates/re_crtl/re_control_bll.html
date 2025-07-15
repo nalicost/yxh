@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" href="/static/css/sub_index.css">
+    <link rel="stylesheet" href="/static/css/query.css">
+    <link rel="stylesheet" href="/static/css/re.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="container">
+        <div id="head">
+            <div class="header">
+                <div class="header-left">
+                    <div><svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200">
+                            <path d="M512 512m-512 0a512 512 0 1 0 1024 0 512 512 0 1 0-1024 0Z" fill="#ff7777"
+                                data-spm-anchor-id="a313x.search_index.0.i6.48373a81DcpaxG" class="selected"></path>
+                            <path
+                                d="M529.088 64a209.088 209.088 0 0 1 209.024 209.088v477.824a209.088 209.088 0 1 1-418.112 0V273.088A209.088 209.088 0 0 1 529.088 64z"
+                                fill="#333333"></path>
+                            <path d="M529.088 840.512a89.6 89.6 0 1 0 0-179.2 89.6 89.6 0 0 0 0 179.2z" fill="#707070">
+                            </path>
+                            <path d="M529.088 601.6a89.6 89.6 0 1 0 0-179.2 89.6 89.6 0 0 0 0 179.2z" fill="#707070">
+                            </path>
+                            <path d="M529.088 362.688a89.6 89.6 0 1 0 0-179.2 89.6 89.6 0 0 0 0 179.2z" fill="#FF3C3C">
+                            </path>
+                        </svg>
+                        <div id="re" class="line line1"></div><span>结果管理</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <ul>
+                        <li><a href="/param_crtl/" target="_self"><img src="/static/svg/121_灯泡.svg"
+                                    alt=""><span>本地参数管理</span></a></li>
+                        <li><a href="/re_crtl/" target="_self"><img src="/static/svg/121_火山.svg"
+                                    alt=""><span>结果管理</span></a></li>
+                        <li><a href="/model_crtl/" target="_self"><img src="/static/svg/121_彗星.svg"
+                                    alt=""><span>大模型管理</span></a></li>
+                        <li><a href="/simulation/" target="_self"><img src="/static/svg/121_书写.svg"
+                                    alt=""><span>模拟生成</span></a></li>
+                        <li><a href="/simulation_visible/" target="_self"><img src="/static/svg/121_风车.svg"
+                                    alt=""><span>可视化结果</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="core-area">
+                <div class="left-menu-bar">
+                    <div class="top-bar">
+                        <div class="title hidden"></div>
+                        <div class="point-set">
+                            <div class="point-row">
+                                <span class="point"></span><span class="point"></span><span class="point"></span>
+                            </div>
+                            <div class="point-row">
+                                <span class="point"></span><span class="point"></span><span class="point"></span>
+                            </div>
+                            <div class="point-row">
+                                <span class="point"></span><span class="point"></span><span class="point"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="core-bar">
+                        <div class="decoration-bar left">
+                            <div class="triangle-d large-style">></div>
+                            <div class="triangle-d large-style">></div>
+                            <div class="triangle-d large-style">></div>
+                            <div class="triangle-d large-style">></div>
+                            <div class="triangle-d large-style">></div>
+                            <div class="triangle-d large-style">></div>
+                            <div class="diamond-style"></div>
+                            <div class="diamond-style"></div>
+                            <div class="line align-line"></div>
+                        </div>
+                        <div class="decoration-bar right switch hidden">
+                            <div class="triangle-d large-style">></div>
+                            <div class="triangle-d large-style">></div>
+                            <div class="triangle-d large-style">></div>
+                            <div class="triangle-d large-style">></div>
+                            <div class="triangle-d large-style">></div>
+                            <div class="triangle-d large-style">></div>
+                            <div class="diamond-style"></div>
+                            <div class="diamond-style"></div>
+                            <div class="line align-line"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-info">
+                    <div class="right-add-file">
+                        <div class="top-file-path-bar">
+                            <div class="title">PATH</div>
+                            <div class="cont-relative-path">/</div>
+                            <div class="change-mod">
+                                <div class="ball-btn"></div>
+                                <div class="l-choice">新标签</div>
+                                <div class="r-choice hidden">文件</div>
+                            </div>
+                        </div>
+                        <div class="core-info">
+                            <div class="wrapper">
+                                 <div class="add-file z-minus">
+                                     <div class="upload-param-file">
+                                        选择的文件为：<input type="text">
+                                    </div>
+                                     <div class="upload-tag">
+                                        选择的标签为：<input type="text">
+                                    </div>
+                                </div>
+                                <div class="add-dir ">
+                                    <div class="dir-name">
+                                        新增的标签名：<input type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bottom-operate-bar">
+                            <div class="wrapper">
+                                <div class="back">返回</div>
+                                <div class="confirm">确认</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right-file-index">
+                        <div class="top-file-path-bar">
+                            <div class="title">PATH</div>
+                            <div class="cont-relative-path">/</div>
+                            <div class="tag-set">
+                            </div>
+                        </div>
+                        <div id="files" class="core-info">
+                            <div class="wrapper">
+
+                            </div>
+                        </div>
+                        <div class="bottom-operate-bar">
+                            <div class="wrapper">
+                                <div class="last">上一页</div>
+                                <div class="delete">删除</div>
+                                <div class="seek">查看</div>
+                                <div class="return">返回上一层</div>
+                                <div class="next">下一页</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="foot"></div>
+    </div>
+    <input type="hidden" value="1" id="pageId">
+    <script src="/static/js/general.js"></script>
+    <script src="/static/js/re.js"></script>
+</body>
+
+</html>

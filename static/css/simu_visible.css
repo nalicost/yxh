@@ -1,0 +1,25 @@
+.content>.core-area>.right-info>.right-add-file{
+    background-image: none;
+    background-color: #F7F7F7;
+}
+.content>.core-area>.right-info>.right-add-file>.core-info>.wrapper{
+    position: relative;
+}
+.content>.core-area>.right-info>.right-add-file>.core-info>.wrapper>.add-file{
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    height: 100%;
+    background-color: #Ff7777;
+}
+.content>.core-area>.right-info>.right-add-file>.core-info>.wrapper>.add-dir{ 
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    height: 100%;
+    background-color: #813535;
+}

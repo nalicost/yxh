@@ -1,0 +1,461 @@
+
+/* 核心内容样式 */
+.content>.core-area{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+/* 左侧菜单样式 */
+.content>.core-area>.left-menu-bar{
+    display: flex;
+    flex-wrap: wrap;
+    width: 68px;
+    height: 80%;
+    background-color: grey;
+    transition: 1s;
+}
+/* 顶层功能弹出按钮 */
+.content>.core-area>.left-menu-bar>.top-bar{
+    width: 100%;
+    height: 10%;
+    background-color: #333;
+    position: relative;
+}
+.content>.core-area>.left-menu-bar>.top-bar>.title{
+    position: absolute;
+    top: 12px;
+    left: 68px;
+    height: 20px;
+    opacity: 1;
+    overflow: hidden;
+    transition: 1s;
+}
+.content>.core-area>.left-menu-bar>.top-bar>.point-set{
+    position: absolute;
+    left: 8px;
+}
+.content>.core-area>.left-menu-bar>.top-bar .point-row{
+    margin-bottom: -8px;
+}
+.content>.core-area>.left-menu-bar>.top-bar .point-row>span{
+    margin-left: 8px;
+}
+/* 核心导航条区域 */
+.content>.core-area>.left-menu-bar>.core-bar{
+    position: relative;
+    width: 100%;
+    height: 90%;
+    background-color: black;
+    transition: 0.3s;
+}
+/* 装饰区域 */
+.content>.core-area>.left-menu-bar>.core-bar>.decoration-bar{
+    position: absolute;
+    top: 0;
+    width: 70px;
+    height: 100%;
+    z-index: 1;
+    transition: 1s;
+}
+.content>.core-area>.left-menu-bar>.core-bar>.decoration-bar>.line{
+    width: 60px;
+    height: 4px;
+    top: 172px;
+    left: 6px;
+}
+.content>.core-area>.left-menu-bar>.core-bar>.decoration-bar>.align-line{
+    width: 420px;
+    top: 50px;
+    left: 35px;
+    border-radius: 2px;
+    transform-origin: left;
+}
+.content>.core-area>.left-menu-bar>.core-bar>.decoration-bar>.triangle-d{
+    position: absolute;
+    top: 44px;
+    left: 34px;
+}
+.content>.core-area>.left-menu-bar>.core-bar>.decoration-bar>div:nth-child(2){
+    position: absolute;
+    top: 60px;
+    left: 34px;
+}
+.content>.core-area>.left-menu-bar>.core-bar>.decoration-bar>div:nth-child(3){
+    position: absolute;
+    top: 76px;
+    left: 34px;
+}
+.content>.core-area>.left-menu-bar>.core-bar>.decoration-bar>div:nth-child(4){
+    position: absolute;
+    top: 92px;
+    left: 34px;
+}
+.content>.core-area>.left-menu-bar>.core-bar>.decoration-bar>div:nth-child(5){
+    position: absolute;
+    top: 108px;
+    left: 34px;
+}
+.content>.core-area>.left-menu-bar>.core-bar>.decoration-bar>div:nth-child(6){
+    position: absolute;
+    top: 124px;
+    left: 34px;
+}
+.content>.core-area>.left-menu-bar>.core-bar>.decoration-bar>div:nth-child(7){
+    border: 18px solid transparent;
+    border-top-color: #fff;
+    transform-origin: center;
+    top: 476px;
+    left: 17px;
+    
+}
+.content>.core-area>.left-menu-bar>.core-bar>.decoration-bar>div:nth-child(8){
+    border: 18px solid transparent;
+    border-bottom: 36px solid #fff;
+    transform-origin: center;
+    top: 378px;
+    left: 17px;
+}
+/* 右侧文件信息样式 */
+.right-info{
+    flex-grow: 1;
+    height: 80%;
+    background-color: #666;
+    position: relative;
+}
+/* 增加文件样式 */
+.content>.core-area>.right-info>.right-add-file{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: repeating-linear-gradient(to bottom, #eee 0px ,#eee 30px ,black 31px);
+    opacity: 1;
+    transition: 1s;
+}
+/* 头部样式 */
+.content>.core-area>.right-info>.right-add-file>.top-file-path-bar{
+    width: 100%;
+    height: 10%;
+    background-color: #666;
+    position: relative;
+}
+.content>.core-area>.right-info>.right-add-file>.top-file-path-bar>.title{
+    margin-left: 24px;
+    margin-right: 24px;
+    margin-top: 12px;
+    width: 90px;
+    height: 40px;
+    font-size: 32px;
+    font-weight: bold;
+    color: skyblue;
+    position: absolute;
+}
+.content>.core-area>.right-info>.right-add-file>.top-file-path-bar>.cont-relative-path{
+    margin-top: 22px;
+    width: 10px;
+    height: 24px;
+    overflow: hidden;
+    font-weight: bold;
+    transition: 1s;
+    position: absolute;
+    left: 150px;
+}
+/* 切换按钮样式 */
+.content>.core-area>.right-info>.right-add-file>.top-file-path-bar>.change-mod{
+    position: absolute;
+    right: 40px;
+    top: 12px;
+    width: 80px;
+    height: 20px;
+    border-radius: 10px;
+    border: 2px solid black;
+
+}
+.content>.core-area>.right-info>.right-add-file>.top-file-path-bar>.change-mod>.ball-btn{
+    position: absolute;
+    left: -1px;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: black;
+    z-index: 2;
+    transform: translateX(0);
+    transition: 0.5s;
+
+}
+.content>.core-area>.right-info>.right-add-file>.top-file-path-bar>.change-mod>.l-choice{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    color: #333;
+    opacity: 1;
+    text-align: center;
+    transition: 0.5s;
+    line-height: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    opacity: 1;
+}
+.content>.core-area>.right-info>.right-add-file>.top-file-path-bar>.change-mod>.r-choice{
+     position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 20px;
+    border-radius: 10px;
+    background-color: rgb(53, 57, 60);
+    color: #fff;
+    opacity: 1;
+    text-align: center;
+    transition: 0.5s;
+    line-height: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+.content>.core-area>.right-info>.right-add-file>.core-info{
+    width: 80%;
+    height: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.content>.core-area>.right-info>.right-add-file>.core-info>.wrapper{
+    width: 90%;
+    height: 80%;
+    position: relative;
+}
+/* 增加文件的样式 */
+.content>.core-area>.right-info>.right-add-file>.core-info>.wrapper>.add-file{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -130%);
+    transition: 0.5s;
+}
+.content>.core-area>.right-info>.right-add-file>.core-info>.wrapper>.add-file>.upload-param-file{
+    color: #333;
+    width: 300px;
+    position: relative;
+}
+.content>.core-area>.right-info>.right-add-file>.core-info>.wrapper>.add-file>.upload-param-file>input{
+    color: #333;
+    position: absolute;
+    left: 114px;
+    transform: scale(0.8);
+}
+
+.content>.core-area>.right-info>.right-add-file>.bottom-operate-bar{
+    width: 100%;
+    height: 10%;
+    background-color: #ddd;
+}
+.content>.core-area>.right-info>.right-add-file>.bottom-operate-bar>.wrapper{
+    width: 40%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.content>.core-area>.right-info>.right-add-file>.bottom-operate-bar>.wrapper>div{
+    width: 80px;
+    height: 30px;
+    background-color:transparent;
+    border-radius: 4px;
+    color: rgb(53, 57, 60);
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.content>.core-area>.right-info>.right-add-file>.bottom-operate-bar>.wrapper>div:hover{
+    background-color: skyblue;
+    color: #fff;
+}
+/* 增加文件夹的样式 */
+.content>.core-area>.right-info>.right-add-file>.core-info>.wrapper>.add-dir{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: 1s;
+}
+.content>.core-area>.right-info>.right-add-file>.core-info>.wrapper>.add-dir>div{
+    margin-bottom: 6px;
+}
+.content>.core-area>.right-info>.right-add-file>.core-info>.wrapper>.add-dir>.dir-name{
+    color: #333;
+}
+.content>.core-area>.right-info>.right-add-file>.core-info>.wrapper>.add-dir>.dir-name>input{
+    color: #333;
+}
+.content>.core-area>.right-info>.right-add-file>.core-info>.wrapper>.add-dir>.dir-head-file-upload{
+    color: #333;
+    width: 300px;
+    position: relative;
+}
+.content>.core-area>.right-info>.right-add-file>.core-info>.wrapper>.add-dir>.dir-head-file-upload>input{
+    color: #333;
+    position: absolute;
+    left: 100px;
+    transform: scale(0.8);
+}
+/* 查看文件样式 */
+.content>.core-area>.right-info>.right-file-index{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: #fff;
+    transition: 1s;
+    opacity: 1;
+}
+.content>.core-area>.right-info>.right-file-index>.top-file-path-bar{
+    width: 100%;
+    height: 10%;
+    background-color: #ff7777;
+    position: relative;
+}
+.content>.core-area>.right-info>.right-file-index>.top-file-path-bar>.title{
+    margin-left: 24px;
+    margin-right: 24px;
+    margin-top: 12px;
+    width: 90px;
+    height: 40px;
+    font-size: 32px;
+    font-weight: bold;
+    color: skyblue;
+    position: absolute;
+}
+.content>.core-area>.right-info>.right-file-index>.top-file-path-bar>.cont-relative-path{
+    margin-top: 22px;
+    width: 10px;
+    height: 24px;
+    overflow: hidden;
+    font-weight: bold;
+    transition: 1s;
+    position: absolute;
+    left: 150px;
+}
+.content>.core-area>.right-info>.right-file-index>.core-info{
+    width: 80%;
+    height: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.content>.core-area>.right-info>.right-file-index>.core-info>.wrapper{
+    width: 90%;
+    height: 80%;
+}
+.content>.core-area>.right-info>.right-file-index>.core-info>.wrapper>.show{
+    width: 100px;
+    height: 160px;
+    background-color: #FFC2C3;
+    border-radius: 8px;
+    margin-left: 40px;
+    margin-top: 80px;
+    text-align: center;
+    line-height: 160px;
+    color: black;
+    overflow: hidden;
+    float: left;
+    transition: 1s;
+    cursor: pointer;
+}
+/* 底部按钮样式 */
+.content>.core-area>.right-info>.right-file-index>.bottom-operate-bar{
+    width: 100%;
+    height: 10%;
+    background-color: #FFC2C3;
+}
+.content>.core-area>.right-info>.right-file-index>.bottom-operate-bar>.wrapper{
+    width: 40%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.content>.core-area>.right-info>.right-file-index>.bottom-operate-bar>.wrapper>div{
+    width: 80px;
+    height: 30px;
+    background-color: transparent;
+    border-radius: 4px;
+    color: rgb(53, 57, 60);
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.content>.core-area>.right-info>.right-file-index>.bottom-operate-bar>.wrapper>div:hover{
+    background-color: #ff7777;
+    color: #fff;
+}
+/* 点样式 */
+.point{
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: white;
+}
+/* 下三角样式 */
+.triangle-d{
+    transform: rotate(90deg);
+}
+/* 巨大化样式 */
+.large-style{
+    scale: 4;
+}
+/* 竖线样式 */
+.align-line{
+    transform: rotate(90deg);
+}
+/* 下半菱形样式 */
+.diamond-style{
+    position: absolute;
+    transform: scaleY(2) ;
+}
+/* 左右切换 */
+.left{
+    left: 0!important;
+}
+.right{
+    right: 0!important;
+}
+.right-translate{
+    transform: translateX(61px)!important;
+}
+/* z轴翻转效果 */
+.switch{
+    transform-origin: center;
+    transform: translate(0, 20px) rotate3d(1, 0, 0, 180deg);;
+}
+/* 隐藏 */
+.hidden{
+    opacity: 0!important;
+}
+.z-minus{
+    opacity: 0!important;
+    z-index: -1!important;
+}
+/* 颜色切换 */
+.change-bk-blue{
+    background-color: deepskyblue!important;
+}
+/* 激活文件 */
+.file-active{
+    transform: translate(-5px, -5px);
+    box-shadow: rgb(232,232,232) 10px 10px 3px;
+}
+/* 大模型切换 */
