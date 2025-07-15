@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #map{
+            width: 600px;
+            height: 400px;
+            margin: 0 auto;
+            background-color: #ff7777;
+            position: relative;
+        }
+        .point{
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            position: absolute;
+            background-color: orange;
+        }
+        .line{
+            height: 2px;
+            background-color: gold;
+            transform-origin: left;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div id="map">
+
+    </div>
+    <script>
+        let positon = []
+        const map = document.querySelector('#map')
+        const x_start = 121.52283401595177
+        const x_range = 121.52402342971303 - 121.52283401595177
+        const y_start = 30.99934182246152
+        const y_range =  30.99999987153755 - 30.99934182246152
+        const source = [
+            [
+                121.52402342971303,
+                30.99934182246152
+            ],
+            [
+                121.5239855408019,
+                30.99937351629983
+            ],
+            [
+                121.52283401595177,
+                30.99999987153755
+            ]
+        ]
+
+        function generatePoint(x, y){
+            const point = document.createElement('div')
+            point.classList.add('point')
+            point.style.left = x + 'px'
+            point.style.top = y + 'px'
+            map.appendChild(point)
+        }
+
+        function generateLine(pos_arr){
+            const line = document.createElement('div')
+            const pos_vec = switchVec(pos_arr[0], pos_arr[1])
+            line.classList.add('line')
+            line.style.width = calLen(pos_arr[0], pos_arr[1]) + 'px'
+            line.style.rotate = calAng(pos_vec) + 'deg'
+            line.style.left = pos_arr[0][0] + 'px'
+            line.style.top = pos_arr[0][1] + 'px'
+            map.appendChild(line)
+        }
+
+        function calPos(longitude, latitude){
+            const x = (longitude - x_start) / x_range * 600
+            const y = (latitude - y_start) / y_range * 400
+            return [x, y]
+        }
+
+        function calLen(pos_p, pos_a){
+            return  Math.sqrt(Math.pow(pos_p[0] - pos_a[0], 2) + Math.pow(pos_p[1] - pos_a[1], 2))
+        }
+
+        function switchVec(pos_p, pos_a){
+            return [pos_a[0] - pos_p[0], pos_a[1] - pos_p[1]]
+        }
+
+        function calAng(vec){
+            const len_vec = calLen(vec, [0, 0])
+            return Math.acos(vec[0] /  len_vec) / Math.PI * 180
+        }
+        for(let i=0;i<source.length;i++){
+            let x = source[i][0]
+            let y = source[i][1]
+            let pos_sub_arr = [a, b] = calPos(x, y)
+            positon.push(pos_sub_arr)
+            generatePoint(a, b)
+        }
+        for(let i=0;i<source.length - 1;i++){
+            generateLine([calPos(source[i][0], source[i][1]), calPos(source[i + 1][0], source[i + 1][1])])
+        }
+    </script>
+</body>
+</html>

@@ -1,6 +1,48 @@
 /* 对齐输入框 */
-.content>.core-area>.right-info>.right-add-file>.core-info>.wrapper>.add-dir>div:nth-child(2){
-    margin-left: -47px;
+.content>.core-area>.right-info>.right-add-file>.core-info>.wrapper>.add-dir>div:nth-child(1){
+    margin-top: -20px;
 }
 
+
+/* 文件内容显示样式 */
+.content>.core-area>.right-info>.right-file-index>.core-info>.wrapper>.file{
+    width: 100%;
+    height: 100%;
+    background-color: #FFC2C3;
+    border-radius: 8px;
+    color: black;
+    transition: 1s;
+}
+.content>.core-area>.right-info>.right-file-index>.core-info>.wrapper>.file:hover{
+    transform: translate(-8px, -8px);
+    box-shadow:  rgb(232,232,232) 10px 10px 3px;
+}
+.content>.core-area>.right-info>.right-file-index>.top-file-path-bar>.tag-set{
+    position: absolute;
+    right: 24px;
+    top: 12px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+.content>.core-area>.right-info>.right-file-index>.top-file-path-bar>.tag-set>.tag{
+    width: 60px;
+    height: 30px;
+    border-radius: 15px;
+    border: 1px solid white;
+    text-align: center;
+    line-height: 30px;
+    margin-left: 12px;
+}
+.content>.core-area>.right-info>.right-add-file>.core-info>.wrapper>.add-file>div:nth-child(1){
+    margin-top: -40px;
+}
+.content>.core-area>.right-info>.right-add-file>.core-info>.wrapper>.add-file>div:nth-child(2){
+    margin-top: 8px;
+    margin-left: -17px;
+    color: #333;
+}
+.content>.core-area>.right-info>.right-add-file>.core-info>.wrapper>.add-file>div:nth-child(2)>input{
+    color: #333;
+}
 

@@ -1,0 +1,114 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+ul{
+    list-style-type: none;
+}
+span{
+    display: inline-block;
+    width: 1px;
+    height: 1px;
+    background-color: black;
+}
+/* 整体通用样式 */
+#main{
+    width: 400px;
+    height: 800px;
+    border: 1px solid red;
+
+}
+/* 头部样式 */
+#main>.header{
+    width: 100%;
+    height: 10%;
+    background-color: indigo;
+}
+ #main>.header>.left-logo{
+    float: left;
+    width: 80px;
+    height: 20px;
+    background-color: aliceblue;
+}
+#main>.header>.right-menu{
+    float: right;
+    width: 120px;
+    height: 20px;
+    font-size: 8px;
+    background-color: aliceblue;
+}
+ #main>.header>.right-menu>ul{
+     position: relative;
+ }
+#main>.header>.right-menu>ul>li{
+    float: left;
+    margin-right: 8px;
+    margin-top: 6px;
+}
+ #main>.header>.right-menu>ul>li:nth-child(4):hover>div{
+     opacity: 1;
+     z-index: 999;
+ }
+#main>.header>.right-menu>ul>li>div{
+    width: 120px;
+    height: 100px;
+    background-color: aliceblue;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    z-index: -1;
+    transition: 0.8s;
+}
+/* 核心内容样式 */
+.body{
+    width: 100%;
+    height: 80%;
+    background-color: bisque;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: flex-start;
+}
+.body>.left-logo{
+    flex-grow: 2;
+    width: 0;
+    height: 200px;
+    background-color: aliceblue;
+}
+.body>.right-con{
+    flex-grow: 3;
+    width:0;
+    height: 200px;
+    background-color: #666;
+}
+/* 核心内容样式 */
+.foot{
+    width: 100%;
+    height: 10%;
+    background-color: #666;
+    position: relative;
+}
+/* 通用样式 */
+.triangle {
+    width: 0;
+    height: 0;
+    border: 20px solid transparent;
+    border-top-color: black;
+}
+.flow-bar{
+    position: absolute;
+    width: 100px;
+    height: 60px;
+    background-color: orange;
+    left: -100px;
+}
+body:hover>.flow-bar{
+    animation: sayHi 3s linear infinite;
+}
+
+@keyframes sayHi {
+    100%{
+        left: calc(100vw + 100px);
+    }
+}

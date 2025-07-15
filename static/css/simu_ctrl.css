@@ -8,9 +8,9 @@
     background-image: url(../image/water.png);
     background-repeat: repeat-x;
     background-clip: text;
-    background-position-y: -100px;
+    background-position-y: 20px;
     animation: water 3s linear infinite;
-    transition: 0.8s;
+    transition: 1s;
 }
 .content>.core-area>.right-info>.right-add-file>.top-file-path-bar>.bar{
     position: absolute;
@@ -36,7 +36,7 @@
 }
 @keyframes water{
     0%{
-        background-position-x: 0px;
+        background-position-x: 0;
     }
     33.3%{
         background-position-x: 640px;

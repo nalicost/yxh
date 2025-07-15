@@ -61,7 +61,7 @@ function post(url, jsObj,successFunction = function (data){}, asyncio=true, erro
 }
 
 
-function postFile(url, file0bj, successFunction = function (data){}, asyncio=true, errorData=''){
+function postFile(url, fileObj, successFunction = function (data){}, asyncio=true, errorData=''){
     /*
         文件post上传或获取
 
@@ -78,8 +78,7 @@ function postFile(url, file0bj, successFunction = function (data){}, asyncio=tru
     const xhr = new XMLHttpRequest()
     xhr.open('post', url, asyncio)
     let data = new FormData()
-    data.append('fileObj', file0bj)
-    console.log(data)
+    data.append('fileObj', fileObj)
     if (asyncio) {
         xhr.onerror = () => alert(errorData)
         xhr.onload = function () {
@@ -93,9 +92,18 @@ function postFile(url, file0bj, successFunction = function (data){}, asyncio=tru
 }
 
 
+function creEle(clsArr, typ='div'){
+    const newEle = document.createElement(typ)
+    for(let i=0;i<clsArr.length;i++){
+        newEle.classList.add(clsArr[i])
+    }
+    return newEle
+}
+
+
 function addElement(clsArr, wrapEleSel, content="",typ='div'){
     /*
-        生成元素，增加类并放入某个元素内
+        生成元素，增加类与文本内容并放入某个元素内
 
         typ: 需要生成的标签
         clsArr: 需要增加的类的数组
@@ -195,4 +203,14 @@ function calAng(vec){
     */
     const len_vec = calLen(vec, [0, 0])
     return Math.acos(vec[0] /  len_vec) / Math.PI * 180
+}
+
+
+function getTextWidth(text, font) {
+  // re-use canvas object for better performance
+  var canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
+  var context = canvas.getContext("2d"); 
+  context.font = font;
+  var metrics = context.measureText(text);
+  return metrics.width;
 }

@@ -1,0 +1,11 @@
+.content>.core-area>.right-info>.right-file-index>.top-file-path-bar>.title{
+    margin-left: 24px;
+    margin-right: 24px;
+    margin-top: 12px;
+    width: 900px;
+    height: 40px;
+    font-size: 32px;
+    font-weight: bold;
+    color: skyblue;
+    position: absolute;
+}

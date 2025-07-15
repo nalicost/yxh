@@ -50,11 +50,12 @@ switchBallBtn.addEventListener('click', function(){
     switchFile.classList.toggle('z-minus')
 })
 
-//初始化文件信息，拿到数据
-get("/param_crtl/query_main/?file_all=1",param_success)
+// 初始化页面文件信息
+get("/param_crtl/query_main/?file_mode=1", orign_genetate)
 
+// 文件样式生成
 function file_select(){
-    const files=document.querySelectorAll(".show")
+    const files = document.querySelectorAll(".show")
     for(let i=0;i<files.length;i++){
     files[i].addEventListener('click', function(){
         if (this.classList.contains('file-active')) {
@@ -68,16 +69,17 @@ function file_select(){
     })
 }
 }
-//传文件和实现功能需要的
 
-
-function param_success(data){
-    const filesName=data.filesArr
+// 文件元素生成服务器信息返回处理回调
+function orign_genetate(data){
+    const filesName = data.filesArr
     for(let i=0;i<filesName.length;i++){
         addElement(clsArr=["show"], wrapEleSel='#files>.wrapper', filesName[i])
     }
     file_select()
 }
+
+
 //删除
 const delBtn = document.querySelector('.delete')
 
@@ -88,23 +90,192 @@ delBtn.addEventListener('click',function(){
         return
     }
     else{
-        nAme=file.innerText
-        route=document.querySelector(".cont-relative-path").innerText
-        console.log(route)
-        wholeRoute=`${route+nAme}`
-        get("/param_crtl/query_main/?file_all=0&file_name="+wholeRoute,param_delete)
+        const fileName = file.innerText
+        const route = document.querySelector(".cont-relative-path").innerText
+        const page = document.querySelector('#pageId').value
+        get(`/param_crtl/del/?file_name=${route + fileName}&file_page=${page}`, param_delete)
 
     }
 })
 
+// 文件删除服务器信息回调处理
 function param_delete(data){
-    if(data.code===1){
-        document.querySelector("#files>.wrapper").innerHTML=''
+    if(data.code === 1){
         alert('删除成功')
-        param_success(data)
+        document.querySelector("#files>.wrapper").innerHTML = ''
+        orign_genetate(data)
     }
     else{
         alert('删除失败')
     }
 }
+// 查看
+const indexBtn = document.querySelector('.seek')
+indexBtn.addEventListener('click', function(){
+    const file=document.querySelector(".file-active")
+    if(!file){
+        alert('请先选择文件')
+        return
+    }else{
+        const fileName = file.innerText
+        const route = document.querySelector(".cont-relative-path").innerText
+        get(`/param_crtl/query_main/?file_mode=2&file_name=${route + fileName}`, param_forward)
+    }
+})
 
+
+// 文件查看服务器信息回调处理
+function param_forward(data){
+    if(data.code === 1){
+        document.querySelector("#files>.wrapper").innerHTML = ''
+        const path = document.querySelectorAll(".cont-relative-path")
+        document.querySelector('#pageId').value = 1
+        for(let i=0;i<path.length;i++){
+            path[i].innerText = data.newLayer
+            path[i].style.width = getTextWidth(data.newLayer, 'normal 18px STZhongsong') + 'px'
+        }
+        orign_genetate(data)
+    }else if(data.code===2){
+        document.querySelector("#files>.wrapper").innerHTML = ''
+        const path = document.querySelectorAll(".cont-relative-path")
+        for(let i=0;i<path.length;i++){
+            path[i].innerText = data.newLayer
+            path[i].style.width = getTextWidth(data.newLayer, 'normal 18px STZhongsong') + 'px'
+        }     
+        // 生成展示文件内容元素
+        addElement(clsArr=["file"], wrapEleSel='#files>.wrapper', '', 'iframe')
+        const ifrDoc = document.querySelector('iframe').contentWindow.document
+        ifrDoc.write(data.fileCon)
+    }
+}
+
+// 返回
+const retBtn = document.querySelector('.return')
+retBtn.addEventListener('click', function(){
+    const patBarText = document.querySelector('.cont-relative-path').innerText
+    if(patBarText === '/'){
+        alert('已在根目录')
+        return
+    }
+    get(`/param_crtl/query_main/?file_mode=3&path_cur=${patBarText}`, returnPreviousLayer)
+})
+
+// 处理返回逻辑中服务器返回的数据
+function returnPreviousLayer(data){
+    const patBars = document.querySelectorAll('.cont-relative-path')
+    for(let i=0;i<patBars.length;i++){
+        patBars[i].style.width = getTextWidth(data.pathInfo, 'normal 18px STZhongsong') + 'px'
+        setTimeout(()=> {
+            patBars[0].innerText = data.pathInfo
+            patBars[1].innerText = data.pathInfo
+        }, 500)
+        document.querySelector("#files>.wrapper").innerHTML = ''
+        orign_genetate(data)
+    }
+    document.querySelector('#pageId').value = 1
+}
+
+
+// 处理上一页页码跳转
+const perPage = document.querySelector('.last')
+perPage.addEventListener('click', function(){
+    const pageIt = document.querySelector('#pageId')
+    if(pageIt.value === '1'){
+        alert('没有上一页了')
+        return
+    }
+    pageIt.value = +pageIt.value - 1
+    const route = document.querySelector('.cont-relative-path').innerText
+    get(`/param_crtl/query_main/?file_mode=4&file_path=${route}&file_page=${pageIt.value}`, prePageSwitch)
+})
+
+// 上一页切换逻辑
+function prePageSwitch(data){
+    document.querySelector("#files>.wrapper").innerHTML = ''
+    orign_genetate(data)
+}
+
+
+// 处理下一页页码跳转
+const aftPage = document.querySelector('.next')
+aftPage.addEventListener('click', function(){
+    const pageIt = document.querySelector('#pageId')
+    pageIt.value = +pageIt.value + 1
+    const route = document.querySelector('.cont-relative-path').innerText
+    get(`/param_crtl/query_main/?file_mode=4&file_path=${route}&file_page=${pageIt.value}`, aftPageSwitch)
+})
+
+
+// 下一页切换逻辑
+function aftPageSwitch(data){
+    if(data.code === 1){
+        document.querySelector("#files>.wrapper").innerHTML = ''
+        orign_genetate(data)
+    }else{
+        document.querySelector('#pageId').value -= 1
+        alert('已经在最后一页了')
+    }
+}
+
+//上传文件夹
+const fileUpload = document.querySelector('.confirm')
+fileUpload.addEventListener('click', function(){
+    const isNotDir = document.querySelector('.add-dir.z-minus')
+    if(!isNotDir){
+        const dirName = document.querySelector('.dir-name>input')
+        const dirFile = document.querySelector('.dir-head-file-upload>input')
+        if(dirName&&dirFile){
+            const reg = /^[a-z]{5,10}$/
+            if(!reg.test(dirName.value)){
+
+                alert('请输入5-10位小写字母')
+                return
+            }
+            else{
+                const route = document.querySelector('.cont-relative-path').innerText 
+                post(`/param_crtl/upload/?add_mode=1&file_path=${route}`, {
+
+
+                    dir_name: dirName
+                },successUpload)
+                postFile(`/param_crtl/upload?add_mode=2&file_path=${route}`, dirFile.files[0] ,successUpload)
+            }
+        }
+        else{
+            alert('请输入内容')
+            return
+        }
+    }
+    else{
+        const dirOnlyFile = document.querySelector('.upload-param-file>input')
+        const route = document.querySelector('.cont-relative-path').innerText
+        if(dirOnlyFile){
+            postFile(`/param_crtl/upload/?add_mode=3&file_path=${route}`, dirOnlyFile.files[0] ,successUpload)
+
+        }
+        else{
+            alert('请输入内容')
+            return
+        }
+    }
+})
+function successUpload(data){
+    if(data.code === 1){
+        alert('上传文件成功')
+    }
+    else if(data.code === 2){
+        alert('上传文件夹成功')
+    }
+    else if(data.code === 3){
+        alert('该路径无法新增文件或文件夹')
+    }
+    else{
+        alert('文件格式错误，上传失败')
+    }
+}
+
+//返回查询界面键
+const retQuery = document.querySelector('.back')
+retQuery.addEventListener('click', function(){
+    switchBtn.click()
+})

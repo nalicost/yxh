@@ -16,7 +16,13 @@
         <div id="head">
             <div class="header">
                 <div class="header-left">
-                    <div>LOGO<div id="simu_visible" class="line line1"></div><span>可视化结果</span></div>
+                    <div><svg  class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"  xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200">
+                            <path d="M512 512m-512 0a512 512 0 1 0 1024 0 512 512 0 1 0-1024 0Z" fill="#ff7777"  data-spm-anchor-id="a313x.search_index.0.i6.48373a81DcpaxG" class="selected"></path>
+                            <path d="M529.088 64a209.088 209.088 0 0 1 209.024 209.088v477.824a209.088 209.088 0 1 1-418.112 0V273.088A209.088 209.088 0 0 1 529.088 64z" fill="#333333" ></path>
+                            <path d="M529.088 840.512a89.6 89.6 0 1 0 0-179.2 89.6 89.6 0 0 0 0 179.2z" fill="#707070" ></path>
+                            <path d="M529.088 601.6a89.6 89.6 0 1 0 0-179.2 89.6 89.6 0 0 0 0 179.2z" fill="#707070" ></path>
+                            <path d="M529.088 362.688a89.6 89.6 0 1 0 0-179.2 89.6 89.6 0 0 0 0 179.2z" fill="#FF3C3C" ></path>
+                        </svg><div id="simu_visible" class="line line1"></div><span>可视化结果</span></div>
                 </div>
                 <div class="header-right">
                     <ul>
@@ -75,7 +81,7 @@
                     <div class="right-add-file">
                         <div class="top-file-path-bar">
                             <div class="title">PATH</div>
-                            <div class="cont-relative-path">/123</div>
+                            <div class="cont-relative-path">/</div>
                             <div class="change-mod">
                                 <div class="ball-btn"></div>
                                 <div class="l-choice">决策前</div>
@@ -105,31 +111,19 @@
                     <div class="right-file-index">
                         <div class="top-file-path-bar">
                             <div class="title">PATH</div>
-                            <div class="cont-relative-path">/123</div>
+                            <div class="cont-relative-path">/</div>
                         </div>
-                        <div class="core-info">
+                        <div id="files" class="core-info">
                             <div class="wrapper">
-                                <div class="show">
-                                    xxxx文件
-                                </div>
-                                <div class="show">
-                                    xxxx文件
-                                </div>
-                                <div class="show">
-                                    xxxx文件
-                                </div>
-                                <div class="show">
-                                    xxxx文件
-                                </div>
-                                <div class="show">
-                                    xxxx文件
-                                </div>
+
                             </div>
                         </div>
                         <div class="bottom-operate-bar">
                             <div class="wrapper">
                                 <div class="last">上一页</div>
                                 <div class="select">选择</div>
+                                <div class="return">返回上一层</div>
+                                <div class="visible">可视化</div>
                                 <div class="next">下一页</div>
                             </div>
                         </div>
@@ -140,6 +134,9 @@
         </div>
         <div class="foot"></div>
     </div>
+    <input type="hidden" value="1" id="pageId">
+    <input type="hidden" value="1" id="layer">
+    <script src="/static/js/general.js"></script>
     <script src="/static/js/simu_visible.js"></script>
 </body>
 
