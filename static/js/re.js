@@ -139,7 +139,7 @@ function param_forward(data){
         }
         orign_genetate(data)
     }else if(data.code===2){
-        document.querySelector("#files>.wrapper").innerHTML = data.fileCon
+        document.querySelector("#files>.wrapper").innerHTML = ''
         const path = document.querySelectorAll(".cont-relative-path")
         for(let i=0;i<path.length;i++){
             path[i].innerText = data.newLayer
@@ -237,9 +237,11 @@ fileUpload.addEventListener('click', function(){
                 return
             }
             else{
-                const route = document.querySelector('.cont-relative-path').innerText 
+                const route = document.querySelector('.cont-relative-path').innerText
+                const isNotAdd = document.querySelector('#is-not-add-tag')
                 post(`/re_crtl/upload/?add_mode=1&file_path=${route}`, {
-                    dir_name: dirName.value
+                    dir_name: dirName.value,
+                    not_add: isNotAdd.value
                 }, successUpload)
             }
         }
@@ -251,11 +253,13 @@ fileUpload.addEventListener('click', function(){
     else{
         const dirOnlyFile = document.querySelector('.upload-param-file>input').value
         const tagIt = document.querySelector('.upload-tag>input').value
+        const isNotAdd = document.querySelector('#is-not-add-file').value
         const route = document.querySelector('.cont-relative-path').innerText
         if(dirOnlyFile && tagIt){
             post(`/re_crtl/upload/?add_mode=2&file_path=${route}`, {
                 'file_name': dirOnlyFile,
-                'tag_sel': tagIt
+                'tag_sel': tagIt,
+                'not_add': isNotAdd
             },successUpload)
         }
         else{
@@ -274,8 +278,29 @@ function successUpload(data){
     else if(data.code === 3){
         alert('该路径无法新增标签或为文件增加标签')
     }
+    else if(data.code === 4){
+        alert('删除标签成功')
+    }
+    else if(data.code === 5){
+        alert('该路径无法删除标签或为文件删除标签')
+    }
+    else if(data.code === 6){
+        alert('标签已存在')
+    }
+    else if(data.code === 7){
+        alert('标签不存在')
+    }
+    else if(data.code === 8){
+        alert('文件不存在')
+    }
+    else if(data.code === 9){
+        alert('文件已存在')
+    }
+    else if(data.code === 10){
+        alert('文件标签已删除')
+    }
     else{
-        alert('文件或标签不存在')
+        alert('非本文件夹中的文件')
     }
 }
 

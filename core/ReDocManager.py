@@ -1,6 +1,8 @@
 import os
 import json
 import shutil
+from pathlib import Path
+from GeneratorArtificialIntelligenceSimulationTraffic.settings import BASE_DIR
 
 
 class ReDocManager:
@@ -174,12 +176,12 @@ class ReDocManager:
             data = json.load(f)
         
         if "tag_" + tag in data:
-            raise ValueError
+            return 0
         # 添加新标签（格式为"tag_标签名"）
         data["tag_" + tag] = []
         
         # 更新文件内容
-        self.update_file(file_name, data)
+        return self.update_file(file_name, data)
 
     def index_tag(self, file_name, path):
         """
@@ -200,9 +202,12 @@ class ReDocManager:
             data = json.load(f)
         
         # 遍历所有标签项
-        for item in data:
-            if file_name in item:
-                tag_li.append(item)
+        for key, value in data.items():
+            if isinstance(value, int):
+                continue
+            if file_name in value:
+                print(key, value)
+                tag_li.append(key)
                 
         return tag_li
 
@@ -222,13 +227,13 @@ class ReDocManager:
             
         # 检查标签是否存在
         if "tag_" + tag not in data:
-            raise ValueError(f"标签 {tag} 不存在")
+            return 0
         
         # 删除标签
         del data["tag_" + tag]
         
         # 更新文件
-        self.update_file(file_name, data)
+        return self.update_file(file_name, data)
 
     def add_file(self, path, tag, file_name):
         """
@@ -250,17 +255,17 @@ class ReDocManager:
         
         # 检查标签是否存在
         if "tag_" + tag not in data:
-            raise ValueError(f"标签 {tag} 不存在")
+            return 0
             
         # 检查文件名是否已存在
         if file_name in data["tag_" + tag]:
-            raise ValueError(f"文件名 {file_name} 已存在于标签中")
+            return 2
         
         # 添加文件名
         data["tag_" + tag].append(file_name)
         
         # 更新文件
-        self.update_file(path, data)
+        return self.update_file(path, data)
 
     def rm_file(self, path, tag, file_name):
         """
@@ -282,17 +287,17 @@ class ReDocManager:
         
         # 检查标签是否存在
         if "tag_" + tag not in data:
-            raise ValueError(f"标签 {tag} 不存在")
+            return 0
             
         # 检查文件名是否存在
         if file_name not in data["tag_" + tag]:
-            raise ValueError(f"文件名 {file_name} 不在标签中")
+            return 2
         
         # 移除文件名
         data["tag_" + tag].remove(file_name)
         
         # 更新文件
-        self.update_file(path, data)
+        return self.update_file(path, data)
 
     def update_file(self, file_name, data):
         """
@@ -307,11 +312,12 @@ class ReDocManager:
         # 写入更新后的数据
         with open(path_tit, "w", encoding="utf-8") as f:
             f.write(json.dumps(data, ensure_ascii=False))
+        return 1
 
 
 if __name__ == "__main__":
     # 示例用法
-    hx = ReDocManager()
+    hx = ReDocManager('../files/re_files/')
     
     # 测试数据
     data_use = {
@@ -596,13 +602,13 @@ if __name__ == "__main__":
   
     
     # 示例操作
-    # hx.main_dir_structure_generator("test")
+    # hx.main_dir_structure_generator("test5")
     # hx.load_title_structure_doc("test_re_doc", 'Pao')
     # pre, aft, sug = hx.load_json_doc(data_use)
     # hx.doc_json_generator([pre, aft, sug], [
-    #     "test_re_doc/re_sub1/pre_decision.json",
-    #     "test_re_doc/re_sub1/aft_decision.json",
-    #     "test_re_doc/re_sub1/suggestion.json"
+    #     "test5_re_doc/re_sub1/pre_decision.json",
+    #     "test5_re_doc/re_sub1/aft_decision.json",
+    #     "test5_re_doc/re_sub1/suggestion.json"
     # ])
     # hx.doc_del("test_re_doc/re_sub4")
     # hx.add_tag("xiaomi","test_re_doc/re_title.json")

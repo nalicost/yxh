@@ -14,21 +14,21 @@ class ParamDocManager:
          """
          #跨平台将字符串转化为path对象
         self.base_path = Path(base_path).resolve()
-        print(self.base_path)
       
 
     def doc_name_generator(self,user_name: str):
         #生成对应用户名的文件夹
         self.base_path.mkdir(exist_ok=True, parents=True)
         if not re.match(r'^[a-z0-9_]+$', user_name):
-            raise ValueError("名称只能包含小写字母、数字和下划线")
+            return 0
         
         # 组装目标路径
         target_dir = self.base_path / f"{user_name}_param_doc"
         # 重复性检查
         if target_dir.exists():
-            raise FileExistsError(f"路径 {target_dir} 已存在")
+            return 0
         target_dir.mkdir()
+        return 1
 
     @staticmethod
     def count_files(path, recursive=False):
@@ -56,23 +56,25 @@ class ParamDocManager:
             **{f"road_name{i+1}": name for i, name in enumerate(road_names)},  
             "param_num": param_count
         }
-        with (target_dir / "origin_param_title.json").open('w') as f:
-            json.dump(header, f, indent=2,ensure_ascii=False)
+        if os.path.exists(target_dir / "origin_param_title.json"):
+            return 0
+        with (target_dir / "origin_param_title.json").open('w', encoding='utf-8') as f:
+                json.dump(header, f, indent=2,ensure_ascii=False)
+        return 1
      
 
 
     def load_json_doc(self,param_list: list) -> Dict:
         """
         放入参数列表转化为对应的字典
-        参数列表格式为["start_time","car_stream_amount",[["name", "range", "level", "re"],…………],[["content", "location", "timne"],…………]]
+        参数列表格式为["start_time",[["name", "range", "level", "re"],…………],[["content", "location", "time"],…………]]
         """
-        special_list = param_list[2]
-        decision_list = param_list[3]
+        special_list = param_list[1]
+        decision_list = param_list[2]
         special_list_dict = [dict(zip(("name", "range", "level", "re"), item)) for item in special_list]
-        decision_list_dict = [dict(zip(("content", "location", "timne"), item)) for item in decision_list]
+        decision_list_dict = [dict(zip(("content", "location", "time"), item)) for item in decision_list]
         param = {
             "start_time": param_list[0],
-            "car_stream_amount":param_list[1],
             **{f"special{i+1}": name for i, name in enumerate(special_list_dict)},
             **{f"decision{i+1}": name for i, name in enumerate(decision_list_dict)}
         }
@@ -86,14 +88,14 @@ class ParamDocManager:
         count = 0
         target_dir = self.base_path / f"{user_name}_param_doc"
 
-        with open(target_dir / "origin_param_title.json",'r') as f:
+        with open(target_dir / "origin_param_title.json",'r', encoding='utf-8') as f:
                     data = json.load(f)
                     data["param_num"] += 1 
                     count =  data["param_num"]
-        with (target_dir / f"origin_param{count}.json").open('w') as f:
+        with (target_dir / f"origin_param{count}.json").open('w', encoding='utf-8') as f:
                 json.dump(param, f, indent=2,ensure_ascii=False)
         
-        with (target_dir / "origin_param_title.json").open('w') as f:
+        with (target_dir / "origin_param_title.json").open('w', encoding='utf-8') as f:
             json.dump(data, f, indent=2,ensure_ascii=False)
         
 

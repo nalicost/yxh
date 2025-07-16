@@ -89,7 +89,6 @@ def gen_view(request):
     if request.method == "GET":
         file_path = request.GET.get("file_path")
         file_name = request.GET.get("file_name")
-        print(file_path, file_name)
         re_d = {'code': 3,
                 'height': -260,
                 'con': '生成完成'}

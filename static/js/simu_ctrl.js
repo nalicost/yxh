@@ -83,7 +83,7 @@ function simStart(data){
         const showSt = document.querySelector('#showSt')
         loading.style.backgroundPositionY = 20 + 'px'
         showSt.innerHTML = data.con
-        get(`/simulation/gen/?$file_name=${data.fileName}&file_path=${data.filePath}`, simStart)
+        get(`/simulation/gen/?file_name=${data.fileName}&file_path=${data.filePath}`, simStart)
         loadSt(data.height)
         get(`/simulation/gen_statu/?statu_code=2`, simStart)
         get(`/simulation/gen_statu/?statu_code=3`, simStart)

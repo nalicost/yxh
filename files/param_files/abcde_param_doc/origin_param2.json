@@ -1,0 +1,31 @@
+{
+  "start_time": "2021-10-25 00:00:00",
+  "special1": {
+    "name": "name",
+    "range": "range",
+    "level": "level",
+    "re": "re"
+  },
+  "special2": {
+    "name": "name1",
+    "range": "range1",
+    "level": "level1",
+    "re": "re1"
+  },
+  "special3": {
+    "name": "name2",
+    "range": "range2",
+    "level": "level2",
+    "re": "re2"
+  },
+  "decision1": {
+    "content": "content",
+    "location": "location",
+    "time": "time"
+  },
+  "decision2": {
+    "content": "content1",
+    "location": "location1",
+    "time": "time1"
+  }
+}

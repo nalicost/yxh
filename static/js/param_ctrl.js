@@ -132,7 +132,7 @@ function param_forward(data){
         document.querySelector('#pageId').value = 1
         for(let i=0;i<path.length;i++){
             path[i].innerText = data.newLayer
-            path[i].style.width = getTextWidth(data.newLayer, 'normal 18px STZhongsong') + 'px'
+            path[i].style.width = getTextWidth(data.newLayer, 'normal 20px STZhongsong') + 'px'
         }
         orign_genetate(data)
     }else if(data.code===2){
@@ -140,7 +140,7 @@ function param_forward(data){
         const path = document.querySelectorAll(".cont-relative-path")
         for(let i=0;i<path.length;i++){
             path[i].innerText = data.newLayer
-            path[i].style.width = getTextWidth(data.newLayer, 'normal 18px STZhongsong') + 'px'
+            path[i].style.width = getTextWidth(data.newLayer, 'normal 20px STZhongsong') + 'px'
         }     
         // 生成展示文件内容元素
         addElement(clsArr=["file"], wrapEleSel='#files>.wrapper', '', 'iframe')
@@ -232,13 +232,10 @@ fileUpload.addEventListener('click', function(){
                 return
             }
             else{
-                const route = document.querySelector('.cont-relative-path').innerText 
-                post(`/param_crtl/upload/?add_mode=1&file_path=${route}`, {
-
-
-                    dir_name: dirName
+                post(`/param_crtl/upload/?add_mode=1`, {
+                    dir_name: dirName.value
                 },successUpload)
-                postFile(`/param_crtl/upload?add_mode=2&file_path=${route}`, dirFile.files[0] ,successUpload)
+                postFile(`/param_crtl/upload?add_mode=2&dir_name=${dirName.value}`, dirFile.files[0] ,successUpload)
             }
         }
         else{
@@ -269,9 +266,15 @@ function successUpload(data){
     else if(data.code === 3){
         alert('该路径无法新增文件或文件夹')
     }
-    else{
-        alert('文件格式错误，上传失败')
+    else if(data.code === 4){
+        alert('文件格式错误，无法解析，上传失败')
     }
+    else if(data.code === 5){
+        alert('文件编码非utf-8，无法解析，上传失败')
+    }
+    const pageIt = document.querySelector('#pageId')
+    const route = document.querySelector('.cont-relative-path').innerText
+    get(`/param_crtl/query_main/?file_mode=4&file_path=${route}&file_page=${pageIt.value}`, prePageSwitch)
 }
 
 //返回查询界面键

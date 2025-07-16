@@ -1,13 +1,17 @@
 from langchain_openai import ChatOpenAI
 
-llm_obj = None
-LLM_INFO_LIST = {'qwen-plus': 'sk-7cf8cbdcf35a408ba7bac7d9cd3b0c4c'}
+llm, llm_choose = None, None
+
+LLM_INFO_LIST = [
+    ['qwen-plus', 'sk-7cf8cbdcf35a408ba7bac7d9cd3b0c4c'],
+    ['deepseek-r1', 'sk-7cf8cbdcf35a408ba7bac7d9cd3b0c4c'],
+]
 llm_li = []
 
 
 class LLM:
-    def __init__(self, API_KEY, temperature=0, base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"):
-        self.api_key = API_KEY
+    def __init__(self, api_key, temperature=0, base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"):
+        self.api_key = api_key
         self.temperature = temperature
         self.base_url = base_url
     
@@ -19,11 +23,11 @@ class LLM:
 
 
 class ALI(LLM):
-    def __init__(self, API_KEY, model_name, temperature=0, base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"):
-        super().__init__(API_KEY, temperature, base_url)
+    def __init__(self, model_name, api_key, temperature=0, base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"):
+        super().__init__(api_key, temperature, base_url)
         self.model = model_name
         self.generator_llm_obj()
-    
+
     def generator_llm_obj(self):
         self.llm = ChatOpenAI(
                     api_key=self.api_key,
@@ -33,15 +37,12 @@ class ALI(LLM):
                     )
     
     def switch(self):
-        global llm
+        global llm, llm_choose
+        llm_choose = self
         llm = self.llm
 
-for item, value in LLM_INFO_LIST.items():
-    obj = ALI(API_KEY=value, model_name=item)
+for item in LLM_INFO_LIST:
+    obj = ALI(*item)
     llm_li.append(obj)
 
 llm_li[0].switch()
-
-answer = llm.invoke('hi')
-print(answer)
-
