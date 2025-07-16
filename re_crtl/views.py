@@ -77,6 +77,7 @@ def if_file_with_tag_index(file_content, file_tags, forward_path):
         file_name = '/'.join(forward_path.rsplit('/', 2)[-2:])
         file_tags = re_doc_manager.index_tag(file_name=file_name,
                                              path='/'.join([forward_path.rsplit('/', 2)[0], '/re_title.json']))
+        file_tags = [i.split('_')[1] for i in file_tags]
     re_d = {'code': 2, 'fileCon': file_content,
             'newLayer': forward_path, 'fileTags': file_tags}
     return JsonResponse(re_d)

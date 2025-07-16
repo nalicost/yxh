@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c29c0653-a2a0-4f0b-a48d-82654339016c" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/DjangoProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/DjangoProject.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/ParamDocManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/ParamDocManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/ReDocManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/ReDocManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/llm_parameters_management.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/llm_parameters_management.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_crtl/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/model_crtl/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/param_crtl/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/param_crtl/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/re_crtl/templates/re_crtl/re_control_bll.html" beforeDir="false" afterPath="$PROJECT_DIR$/re_crtl/templates/re_crtl/re_control_bll.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/re_crtl/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/re_crtl/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/simulation/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/simulation/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/re.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/re.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/param_ctrl.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/param_ctrl.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/re.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/re.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/simu_ctrl.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/simu_ctrl.js" afterDir="false" />
-    </list>
+    <list default="true" id="c29c0653-a2a0-4f0b-a48d-82654339016c" name="更改" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
